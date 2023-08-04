@@ -18,16 +18,13 @@
 <div id="loading" >
 
 <script>
-  var urlarr = ["http://www.tianshidai.com", "http://www1.tianshidai.com"];
+  var urlarr = ["http://www.tianshidai.com", "http://m.tianshidai.com"];
   var tzarr = new Array();
   var ping = 1;
   setInterval("ping++", 1);
 
   function test (i) {
-        if (ping<200){
-            tzarr.push(urlarr[i]);
-        }
-        if (ping>300 && ping<500){
+        if (ping<600){
             tzarr.push(urlarr[i]);
         }
        console.log(urlarr[i]+"--" + "(" + ping * 1 + "ms)") ;
@@ -36,7 +33,7 @@
   $(function () {
     $.each(urlarr, function(i){
       var sortid = this;
-	  $("#loading").append('<img src="' + sortid + '" width="1" height="1" style="display:none" onerror=test(' + i + ') >')
+	  $("#loading").append('<img src="' + sortid + '/favicon.ico?' + Math.random() + '" width="1" height="1" style="display:none" onload=test(' + i + ') >')
     });
   });
   
@@ -48,7 +45,8 @@ if (tzarr.length == 0){
   var url = tzarr[0];
 }
  window.location=url;
-}, 1800);
+}, 2000);
+
 </script>
 </body>
 </html>
