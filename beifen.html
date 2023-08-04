@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="referrer" content="never">
+<title>404 Not Found</title>
+<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js?v=3.3.1"></script>
+</head>
+<body>
+<center><img src="loading.gif" width="400px" height="400px" ></center>
+<font style="font-size: 40pt">
+    <br><br>
+    <center>
+        <a id="xljz" style="background: #626663;padding: 8px 40px;margin: 15px;color: #fff;border-radius:8px;cursor: pointer;text-decoration:none;">
+            线路加载中... 
+        </a>
+    </center>
+<div id="loading" >
+
+<script>
+  var urlarr = ["http://www.tianshidai.com", "http://m.tianshidai.com"];
+  var tzarr = new Array();
+  var ping = 1;
+  setInterval("ping++", 1);
+
+  function test (i) {
+        if (ping<600){
+            tzarr.push(urlarr[i]);
+        }
+       console.log(urlarr[i]+"--" + "(" + ping * 1 + "ms)") ;
+  }
+  
+  $(function () {
+    $.each(urlarr, function(i){
+      var sortid = this;
+	  $("#loading").append('<img src="' + sortid + '/favicon.ico?' + Math.random() + '" width="1" height="1" style="display:none" onload=test(' + i + ') >')
+    });
+  });
+  
+setTimeout(function (){
+
+if (tzarr.length == 0){
+  var url = urlarr[Math.floor(Math.random()*urlarr.length)];
+}else{
+  var url = tzarr[0];
+}
+ window.location=url;
+}, 2000);
+
+</script>
+</body>
+</html>
