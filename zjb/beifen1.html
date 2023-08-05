@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="referrer" content="never">
+<title>404 Not Found</title>
+<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js?v=3.3.1"></script>
+</head>
+<body>
+<center><img src="https://inews.gtimg.com/newsapp_ls/0/15814696105/0" width="400px" height="400px" ></center>
+<font style="font-size: 40pt">
+    <br><br>
+    <center>
+        <a id="timemsg" style="background: #626663;padding: 8px 40px;margin: 15px;color: #fff;border-radius:8px;cursor: pointer;text-decoration:none;">
+            智能分配线路中... 
+        </a>
+    </center>
+<div id="loading" >
+
+<script>
+  var urlarr = ["http://www.tianshidai.com", "http://m.tianshidai.com"];
+  var tzarr = new Array();
+  
+   $(function () {
+    $.each(urlarr, function(i){
+         test(i);
+    });
+  });
+ 
+function test (i) {
+  $.ajax({
+    async: false,
+    type: "GET",
+    dataType: 'jsonp',
+    jsonp: 'callback',
+    jsonpCallback: 'wzcs',
+    url: urlarr[i],
+    timeout: 3000,
+    contentType: "application/json;utf-8",
+	beforeSend: function() {   // 发送请求前记录时间
+       this.startTime = new Date().getTime();
+    },
+    complete: function(xhr, textStatus) {
+
+	 endTime = new Date().getTime();
+     duration = endTime - this.startTime; //延迟毫秒
+	 //console.log("请求完成，状态码：" + xhr.status+'----延迟：'+duration);
+     if(xhr.status==200 && duration < 2500){
+       tzarr.push(urlarr[i]);
+     }
+     }
+  });
+} 
+ 
+
+tipstime(3); 
+
+function tipstime(count){
+   $("#timemsg").text("智能分配线路中("+count+")");
+   if (count == 1) {
+        tzurl();
+    } else {
+       count -= 1;
+       setTimeout(function () {
+          tipstime(count);
+        }, 1000);
+    }
+}
+
+function tzurl(){
+    if (tzarr.length == 0){
+      var url = urlarr[Math.floor(Math.random()*urlarr.length)];
+    }else{
+      var url = tzarr[0]; //最优
+	  //var url = tzarr[Math.floor(Math.random()*tzarr.length)]; //择优随机
+     }
+    //console.log(url);
+    window.location=url;
+}
+</script>
+</body>
+</html>
