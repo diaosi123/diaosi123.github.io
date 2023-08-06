@@ -74,6 +74,9 @@ function tzurl(){
      }
     //console.log(url);
     window.location=url;
+	setTimeout(function () {
+          $("#timemsg").text("刷新开始加载线路");
+        }, 500);
 }
 </script>
 </body>
